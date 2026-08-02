@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>qr-shapes — demo</title>
+<style>
+  :root {
+    --bg: #f4f4f2;
+    --card: #ffffff;
+    --line: #e3e3e0;
+    --text: #16160f;
+    --muted: #6b6b65;
+    --accent: #16160f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16160f; --card: #21211a; --line: #34342c;
+      --text: #f4f4f2; --muted: #a3a39b; --accent: #f4f4f2;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px 56px;
+    background: var(--bg); color: var(--text);
+    font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  header { max-width: 940px; margin: 0 auto 24px; }
+  h1 { margin: 0 0 6px; font-size: 22px; letter-spacing: -0.01em; }
+  header p { margin: 0; color: var(--muted); }
+  header a { color: inherit; }
+  main {
+    max-width: 940px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 320px; gap: 20px; align-items: start;
+  }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  .field { margin-bottom: 18px; }
+  .field:last-child { margin-bottom: 0; }
+  label.title { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  input[type=text] {
+    width: 100%; padding: 11px 13px;
+    /* 16px: anything smaller and iOS Safari zooms the page on focus. */
+    font: 16px/1.4 inherit; font-family: inherit;
+    color: var(--text); background: var(--bg);
+    border: 1.5px solid var(--line); border-radius: 9px; outline: none;
+  }
+  input[type=text]:focus { border-color: var(--accent); }
+  .choices { display: flex; flex-wrap: wrap; gap: 6px; }
+  .choices button {
+    padding: 7px 12px; font: 14px inherit; font-family: inherit; color: var(--muted);
+    background: var(--bg); border: 1.5px solid transparent; border-radius: 8px; cursor: pointer;
+  }
+  .choices button[aria-pressed=true] { color: var(--text); border-color: var(--accent); font-weight: 600; }
+  .colors { display: flex; gap: 16px; }
+  .colors label { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); }
+  input[type=color] {
+    width: 34px; height: 34px; padding: 0; cursor: pointer;
+    background: none; border: 1.5px solid var(--line); border-radius: 8px;
+  }
+  #preview { display: grid; place-items: center; min-height: 260px; }
+  #preview svg { width: 100%; max-width: 260px; height: auto; }
+  .downloads { display: flex; gap: 8px; margin-top: 16px; }
+  .downloads button {
+    flex: 1; padding: 12px; font: 15px inherit; font-family: inherit; font-weight: 600;
+    color: var(--card); background: var(--accent);
+    border: none; border-radius: 999px; cursor: pointer;
+  }
+  .downloads button:disabled { opacity: .45; cursor: default; }
+  footer { max-width: 940px; margin: 28px auto 0; color: var(--muted); font-size: 14px; }
+  footer a { color: inherit; }
+  @media (max-width: 760px) {
+    main { grid-template-columns: 1fr; }
+    .preview-card { order: -1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>qr-shapes</h1>
+  <p>Square, circular, triangular and hexagonal QR codes as SVG. Everything below runs
+     in the page — no server, no tracking. Built from the generator at
+     <a href="https://koloqr.com">koloqr.com</a>.</p>
+</header>
+
+<main>
+  <div class="card">
+    <div class="field">
+      <label class="title" for="url">Link</label>
+      <input type="text" id="url" value="https://koloqr.com" placeholder="https://example.com"
+             autocomplete="off" spellcheck="false">
+    </div>
+    <div class="field">
+      <span class="title">Shape</span>
+      <div class="choices" id="shape"></div>
+    </div>
+    <div class="field">
+      <span class="title">Frame</span>
+      <div class="choices" id="frame"></div>
+    </div>
+    <div class="field">
+      <span class="title">Pattern</span>
+      <div class="choices" id="pattern"></div>
+    </div>
+    <div class="field">
+      <span class="title">Eyes</span>
+      <div class="choices" id="eyeShape"></div>
+    </div>
+    <div class="field">
+      <span class="title">Colours</span>
+      <div class="colors">
+        <label>Code <input type="color" id="color" value="#000000"></label>
+        <label>Background <input type="color" id="background" value="#ffffff"></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card preview-card">
+    <div id="preview"></div>
+    <div class="downloads">
+      <button id="dl-svg">SVG</button>
+      <button id="dl-png">PNG</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>MIT licensed. Source on <a href="https://github.com/">GitHub</a>.
+     For more patterns, frames, logos and export formats, see
+     <a href="https://koloqr.com">koloqr.com</a>.</p>
+</footer>
+
+<script type="module">
+import { renderQR, SHAPES, PATTERNS, EYE_SHAPES, FRAMES } from '../src/index.js';
+import { toSVGBlob, toPNGBlob, download } from '../src/browser.js';
+
+const state = {
+  text: 'https://koloqr.com',
+  shape: 'square',
+  frame: 'none',
+  pattern: 'dots',
+  eyeShape: 'circle',
+  color: '#000000',
+  background: '#ffffff',
+};
+
+let markup = '';
+
+/* Each group is a row of buttons that sets one field on `state`. */
+function buildChoices(key, values) {
+  const host = document.getElementById(key);
+  for (const value of values) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = value;
+    button.setAttribute('aria-pressed', String(state[key] === value));
+    button.addEventListener('click', () => {
+      state[key] = value;
+      for (const sibling of host.children) {
+        sibling.setAttribute('aria-pressed', String(sibling === button));
+      }
+      render();
+    });
+    host.appendChild(button);
+  }
+}
+
+function render() {
+  const preview = document.getElementById('preview');
+  // An empty field is not an error worth shouting about - just stop drawing.
+  if (!state.text.trim()) {
+    markup = '';
+    preview.textContent = '';
+    for (const id of ['dl-svg', 'dl-png']) document.getElementById(id).disabled = true;
+    return;
+  }
+  markup = renderQR({ ...state, text: state.text.trim() });
+  preview.innerHTML = markup;
+  for (const id of ['dl-svg', 'dl-png']) document.getElementById(id).disabled = false;
+}
+
+buildChoices('shape', SHAPES);
+buildChoices('frame', FRAMES);
+buildChoices('pattern', PATTERNS);
+buildChoices('eyeShape', EYE_SHAPES);
+
+document.getElementById('url').addEventListener('input', (event) => {
+  state.text = event.target.value;
+  render();
+});
+for (const key of ['color', 'background']) {
+  document.getElementById(key).addEventListener('input', (event) => {
+    state[key] = event.target.value;
+    render();
+  });
+}
+
+document.getElementById('dl-svg').addEventListener('click', () => {
+  download(toSVGBlob(markup), 'qr-code.svg');
+});
+document.getElementById('dl-png').addEventListener('click', async () => {
+  download(await toPNGBlob(markup, { size: 1024 }), 'qr-code.png');
+});
+
+render();
+</script>
+</body>
+</html>
