@@ -5,7 +5,7 @@ with no dependencies and no canvas.
 
 ![Four QR codes: a rounded square, a circle with a wavy edge, a triangle with a double ring, and a hexagon](demo/preview.png)
 
-**[Try it →](https://koloqr.github.io/qr-code-shapes/demo/)**
+**[Try the library →](https://koloqr.github.io/qr-code-shapes/demo/)**  ·  **[Full generator on koloqr.com →](https://koloqr.com)**
 
 Most QR libraries give you a grid of black squares and a colour option. This one
 draws the code into an outline — a disc, a triangle, a hexagon — culling the
@@ -14,7 +14,9 @@ codes still scan; error correction is fixed at level H, which is what buys the
 room to cut the corners off.
 
 These are the renderers behind [koloqr.com](https://koloqr.com), pulled out into
-a library.
+a library. If you just want a code rather than a dependency, the site is free
+and needs no signup — and it has the logos, the other 44 frames and the PDF and
+EPS export that [did not belong here](#what-this-does-not-include).
 
 ## Install
 
