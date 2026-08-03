@@ -1,6 +1,6 @@
 /* Turning rendered markup into files. Browser-only - these need a canvas.
  *
- * Import from 'qr-shapes/browser'; the main entry stays free of DOM
+ * Import from 'qr-code-shapes/browser'; the main entry stays free of DOM
  * assumptions so it can run on a server.
  */
 

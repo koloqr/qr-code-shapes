@@ -1,11 +1,11 @@
-# qr-shapes
+# qr-code-shapes
 
 QR codes that are not square. Circles, triangles and hexagons, drawn as SVG,
 with no dependencies and no canvas.
 
 ![Four QR codes: a rounded square, a circle with a wavy edge, a triangle with a double ring, and a hexagon](demo/preview.png)
 
-**[Try it →](https://koloqr.github.io/qr-shapes/demo/)**
+**[Try it →](https://koloqr.github.io/qr-code-shapes/demo/)**
 
 Most QR libraries give you a grid of black squares and a colour option. This one
 draws the code into an outline — a disc, a triangle, a hexagon — culling the
@@ -19,7 +19,7 @@ a library.
 ## Install
 
 ```sh
-npm install qr-shapes
+npm install qr-code-shapes
 ```
 
 Or use it straight from source — it is plain ES modules, no build step.
@@ -27,7 +27,7 @@ Or use it straight from source — it is plain ES modules, no build step.
 ## Usage
 
 ```js
-import { renderQR } from 'qr-shapes';
+import { renderQR } from 'qr-code-shapes';
 
 const svg = renderQR({ text: 'https://example.com' });
 // → '<svg xmlns="..." viewBox="0 0 380 380">…</svg>'
@@ -51,8 +51,8 @@ const svg = renderQR({
 ### In a page
 
 ```js
-import { renderQR } from 'qr-shapes';
-import { toSVGBlob, toPNGBlob, download } from 'qr-shapes/browser';
+import { renderQR } from 'qr-code-shapes';
+import { toSVGBlob, toPNGBlob, download } from 'qr-code-shapes/browser';
 
 const svg = renderQR({ text: 'https://example.com', shape: 'hexagon' });
 document.querySelector('#preview').innerHTML = svg;
@@ -70,7 +70,7 @@ main entry never touches the DOM.
 want to reach in before serializing:
 
 ```js
-import { renderQRNode, serialize } from 'qr-shapes';
+import { renderQRNode, serialize } from 'qr-code-shapes';
 
 const node = renderQRNode({ text: 'https://example.com' });
 node.setAttribute('role', 'img');
@@ -104,7 +104,7 @@ Every frame works with every shape — the artwork follows the outline.
 The lists are exported, so a UI can enumerate them instead of hard-coding:
 
 ```js
-import { SHAPES, PATTERNS, EYE_SHAPES, FRAMES } from 'qr-shapes';
+import { SHAPES, PATTERNS, EYE_SHAPES, FRAMES } from 'qr-code-shapes';
 ```
 
 Bad values throw rather than silently falling back, so a typo in `shape` shows
@@ -125,8 +125,8 @@ code clearly darker than the background, and test the actual printed size.
 ## Running the demo
 
 ```sh
-git clone https://github.com/koloqr/qr-shapes.git
-cd qr-shapes
+git clone https://github.com/koloqr/qr-code-shapes.git
+cd qr-code-shapes
 npm run demo    # → http://localhost:8000/demo/
 ```
 

@@ -1,17 +1,17 @@
 {
-  "name": "qr-shapes",
+  "name": "qr-code-shapes",
   "version": "0.1.0",
   "description": "Square, circular, triangular and hexagonal QR codes as SVG. No dependencies, no canvas, runs in Node and the browser.",
   "type": "module",
   "license": "MIT",
   "author": "Andy <mr.andyrv@gmail.com>",
-  "homepage": "https://github.com/koloqr/qr-shapes#readme",
+  "homepage": "https://github.com/koloqr/qr-code-shapes#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/koloqr/qr-shapes.git"
+    "url": "git+https://github.com/koloqr/qr-code-shapes.git"
   },
   "bugs": {
-    "url": "https://github.com/koloqr/qr-shapes/issues"
+    "url": "https://github.com/koloqr/qr-code-shapes/issues"
   },
   "exports": {
     ".": "./src/index.js",
@@ -36,8 +36,11 @@
     "qr-code",
     "svg",
     "generator",
-    "circular-qr",
+    "qr-code-generator",
+    "svg-qr-code",
+    "circular-qr-code",
     "rounded-qr",
-    "qr-design"
+    "qr-design",
+    "qr-shapes"
   ]
 }
