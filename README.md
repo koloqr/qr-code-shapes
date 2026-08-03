@@ -1,9 +1,10 @@
 # qr-code-shapes
 
-QR codes that are not square. Circles, triangles and hexagons, drawn as SVG,
-with no dependencies and no canvas.
+QR codes that are not square. An open-source QR code generator for JavaScript
+that draws the code into a circle, a triangle or a hexagon and hands back SVG —
+no dependencies, no canvas, and the same output in Node as in the browser.
 
-![Four QR codes: a rounded square, a circle with a wavy edge, a triangle with a double ring, and a hexagon](demo/preview.png)
+![Four QR codes on a green background: a purple circle with a double ring, a red square with a wavy edge, a black hexagon with a wavy edge, and a green triangle](docs/shapes.png)
 
 **[Make a QR code on koloqr.com →](https://koloqr.com)**
 
@@ -96,7 +97,7 @@ const svg = serialize(node);
 | `seed` | number | `0` | Seeds the scatter in the `star` pattern |
 | `mask` | number | auto | Force a QR mask, 0–7. Changes how the code looks without changing what it says. |
 
-![Six square QR codes showing the dots, rounded, stars, hearts, triangles and bar-v patterns](demo/patterns.png)
+![Six square QR codes showing the dots, rounded, stars, hearts, triangles and bar-v patterns](docs/patterns.png)
 
 Patterns: `dots`, `square`, `small`, `star`, `rounded`, `stars`, `hearts`,
 `triangles`, `diamonds`, `pill-h`, `pill-v`, `bar-h`, `bar-v`. The `rounded`,
@@ -147,8 +148,11 @@ server rather than opening the file, since browsers do not load ES modules over
 
 ## What this does not include
 
+[![KoloQR — free QR code generator](docs/koloqr-generator.png)](https://koloqr.com)
+
 This library is deliberately the core. [koloqr.com](https://koloqr.com) is the
-full generator, and it has the parts that did not belong in a rendering library:
+full generator — free, no signup — and it has the parts that did not belong in a
+rendering library:
 
 - 56 frames instead of 12, including ones with `SCAN ME` text set on a curve
 - Logos in the centre — brand marks or your own image
