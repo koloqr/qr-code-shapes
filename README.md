@@ -5,7 +5,7 @@ with no dependencies and no canvas.
 
 ![Four QR codes: a rounded square, a circle with a wavy edge, a triangle with a double ring, and a hexagon](demo/preview.png)
 
-**[Make a QR code on koloqr.com →](https://koloqr.com)**  ·  [live demo of this library](https://koloqr.github.io/qr-code-shapes/demo/)
+**[Make a QR code on koloqr.com →](https://koloqr.com)**
 
 Most QR libraries give you a grid of black squares and a colour option. This one
 draws the code into an outline — a disc, a triangle, a hexagon — culling the
@@ -96,6 +96,8 @@ const svg = serialize(node);
 | `seed` | number | `0` | Seeds the scatter in the `star` pattern |
 | `mask` | number | auto | Force a QR mask, 0–7. Changes how the code looks without changing what it says. |
 
+![Six square QR codes showing the dots, rounded, stars, hearts, triangles and bar-v patterns](demo/patterns.png)
+
 Patterns: `dots`, `square`, `small`, `star`, `rounded`, `stars`, `hearts`,
 `triangles`, `diamonds`, `pill-h`, `pill-v`, `bar-h`, `bar-v`. The `rounded`,
 `pill-*` and `bar-*` patterns merge neighbouring modules into one shape rather
@@ -124,21 +126,24 @@ correction level is not configurable here. And contrast is yours to get right:
 a pale code on a pale background will render happily and scan badly. Keep the
 code clearly darker than the background, and test the actual printed size.
 
-## Running the demo
+## Local playground
+
+`demo/` is a single page that wires every option to a control, for trying a
+change without writing a script. It is a development tool, not a hosted
+service — if you want a generator to actually use, that is
+[koloqr.com](https://koloqr.com).
 
 ```sh
 git clone https://github.com/koloqr/qr-code-shapes.git
 cd qr-code-shapes
 npm run demo    # → http://localhost:8000/demo/
-```
-
-There is nothing to install. The demo imports the library directly from `src/`,
-which is also why it needs a server rather than opening the file — browsers do
-not load ES modules over `file://`.
-
-```sh
 npm test
 ```
+
+There is nothing to install for either. The page imports the library straight
+from `src/`, so it cannot drift out of date — and that is also why it needs a
+server rather than opening the file, since browsers do not load ES modules over
+`file://`.
 
 ## What this does not include
 
