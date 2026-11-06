@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+title: qr-code-shapes
+type: software
+authors:
+  - family-names: Malinovskyi
+    given-names: Andy
+repository-code: https://github.com/koloqr/qr-code-shapes
+url: https://koloqr.com
+license: MIT
