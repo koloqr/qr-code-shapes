@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23999162.svg)](https://doi.org/10.5281/zenodo.23999162)
+
 # qr-code-shapes
 
 QR codes that are not square. An open-source QR code generator for JavaScript
